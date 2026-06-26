@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo-List</title>
+    <style>
+
+        @font-face {
+            font-family: "IRANYekanX-Bold";
+            src: url(./IRANYekanX-Bold.woff);
+        }
+        @font-face {
+            font-family: "FiraCode";
+            src: url(./FiraCode-Medium.ttf);
+        }
+        * {
+            font-family: "IRANYekanX-Bold";
+            text-align: center;
+            margin: auto;
+            user-select: none;
+            color: #d8d8d8;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #151515;
+        }
+        header {
+            width: 70%;
+            max-width: 550px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #202020;
+            border: 7px solid #313131;
+            border-radius: 15px;
+        }
+        header h1 {
+            font-family: "FiraCode";
+        }
+        #todo-list,
+        #input {
+            width: 90%;
+            max-width: 620px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #202020;
+            border: 7px solid #313131;
+            border-radius: 15px;
+        }
+        input[type=button] {
+            all: unset;
+            padding: 15px;
+            margin: 5px auto;
+            width: 85%;
+            height: auto;
+            color: white;
+            background-color: #303030;
+            border: 1px solid rgb(68, 68, 68);
+            border-radius: 4px;
+            transition: all 0.4s ease-in-out;
+            font-size: 20px;
+        }
+        input[type=button]:hover {
+            cursor: pointer;
+            background-color: #404040;
+            transform: translateY(-2px);
+        }
+        .in {
+            all: unset;
+            margin: 5px auto;
+            padding: 15px;
+            width: 85%;
+            height: auto;
+            background-color: #303030;
+            border: 1px solid rgb(68, 68, 68);
+            border-radius: 4px;
+            transition: all 0.4s ease-in-out;
+            font-size: 20px;
+        }
+        ul li {
+            user-select: text;
+            list-style: none;
+            font-family: "FiraCode", IRANYekanX-Bold;
+            text-align: justify;
+            padding: 10px;
+            margin: 5px auto;
+            width: 90%;
+            height: auto;
+            color: white;
+            background-color: #303030;
+            border: 2px solid rgb(68, 68, 68);
+            border-radius: 4px;
+            transition: all 0.4s ease-in-out;
+            font-size: 20px;
+            text-align: justify;
+            overflow: hidden;
+        }
+        button {
+            all: unset;
+            text-align: center;
+            font-family: "FiraCode";
+            font-size: 20px;
+            float: left;
+            width: 37px;
+            height: 37px;
+            color: white;
+            background-color: #303030;
+            border-radius: 5px;
+            transition: all 0.4s ease-in-out;
+            position: relative;
+        }
+        button:hover {
+            cursor: pointer;
+            background-color: #404040;
+            transform: translateY(-2px);
+        }
+        h4, h5, details, summary {
+            user-select: text;
+            display: inline;
+            text-align: justify;
+        }
+        h5 {
+            text-align: justify;
+            display: inline;
+        }
+        h5 {
+            display: inline-block;
+            vertical-align: top;
+            max-width: 97%;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        h4 {
+            color: white;
+            margin-right: 5px;
+            text-align: left;
+        }
+        h4:hover {
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <header><h1>ToDo-List</h1></header>
+
+    <section id="input">
+        <input type="text" class="in" placeholder="عنوان کار خود را وارد کنید"> <br>
+        <input type="text" class="in" placeholder="کار خود را وارد کنید"> <br>
+        <input type="button" value="ثبت" onclick="addItem()">
+    </section>
+
+    <section>
+        <ul id="todo-list">
+            <h2 id="empty-msg">فعلا کاری ندارید :)</h2>
+        </ul>
+    </section>
+
+
+    <script>
+        
+        let n = document.getElementsByClassName("in")[0]
+        let i = document.getElementsByClassName("in")[1]
+        let list = document.getElementById("todo-list")
+
+        window.onload = () => {
+            let savedData = localStorage.getItem("todoData");
+            
+            if (savedData) {
+                list.innerHTML = savedData;
+            } else {
+                list.innerHTML = `<h2 id="empty-msg">فعلا کاری ندارید :)</h2>`;
+            }
+        }
+
+
+        let addItem = ()=>{
+            if (n.value.length > 30) {
+                alert("عنوان نباید بیشتر از 30 کاراکتر باشد!")
+                return
+            }
+            if (i.value.length > 0) {
+
+            } else {
+                alert("ورودی نباید خالی باشد!")
+                return
+            }
+
+            if (i.value.length > 0) {
+                let emptymsg = document.getElementById("empty-msg")
+                if (emptymsg){
+                    emptymsg.remove()
+                }
+                list.innerHTML = list.innerHTML + 
+                `
+                <li>
+                    <button title="حذف این کار" onclick="deletItem(this)" style="color: #ff3d3d">X</button>
+                    <details>
+
+                        <summary>
+                            <h4>${n.value}</h4>
+                        </summary>
+                        <h5>${i.value}</h5>
+
+                    </details>
+                 </li>
+                `
+                localStorage.setItem("todoData", list.innerHTML);
+                n.value = ""
+                i.value = ""
+            } else {
+                alert("ورودی نباید خالی باشد!")
+                return
+            }
+        }
+
+        let deletItem = (element) => {
+            element.parentElement.remove()
+
+            if (list.querySelectorAll("li").length === 0){
+                list.innerHTML = `<h2 id="empty-msg">فعلا کاری ندارید :)</h2>`
+                localStorage.removeItem("todoData")
+            } else {
+                localStorage.setItem("todoData", list.innerHTML)
+            }
+        }
+
+    </script>
+
+</body>
+</html>
