@@ -2,10 +2,6 @@
     font-family: "VazirCode";
     src: url(../fonts/Vazir-Code-Hack-Extra-Height.woff2);
 }
-@font-face {
-    font-family: "FiraCode";
-    src: url(./FiraCode-Medium.ttf);
-}
 * {
     font-family: "VazirCode";
     text-align: center;
